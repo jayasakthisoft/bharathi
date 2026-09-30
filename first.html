@@ -1,0 +1,198 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Quiz Competition</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            text-align: center;
+        }
+
+        .container {
+            width: 500px;
+            margin: 50px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input {
+            padding: 10px;
+            width: 80%;
+            margin: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .question {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        #timer {
+            color: red;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #result {
+            font-size: 22px;
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🏆 Online Quiz Competition</h1>
+
+    <div id="start">
+        <h3>Enter Your Name</h3>
+        <input type="text" id="name" placeholder="Enter your name">
+        <br>
+        <button onclick="startQuiz()">Start Quiz</button>
+    </div>
+
+    <div id="quiz" style="display:none;">
+
+        <h3 id="welcome"></h3>
+
+        <p id="timer">Time: 30</p>
+
+        <div class="question">
+            <p>1. What is the capital of India?</p>
+            <input type="radio" name="q1" value="Delhi"> Delhi<br>
+            <input type="radio" name="q1" value="Mumbai"> Mumbai<br>
+            <input type="radio" name="q1" value="Chennai"> Chennai<br>
+        </div>
+
+        <div class="question">
+            <p>2. Which language is used for web page structure?</p>
+            <input type="radio" name="q2" value="HTML"> HTML<br>
+            <input type="radio" name="q2" value="Python"> Python<br>
+            <input type="radio" name="q2" value="Java"> Java<br>
+        </div>
+
+        <div class="question">
+            <p>3. How many days are there in a week?</p>
+            <input type="radio" name="q3" value="5"> 5<br>
+            <input type="radio" name="q3" value="7"> 7<br>
+            <input type="radio" name="q3" value="10"> 10<br>
+        </div>
+
+        <div class="question">
+            <p>4. Which device is used to measure temperature?</p>
+            <input type="radio" name="q4" value="Thermometer"> Thermometer<br>
+            <input type="radio" name="q4" value="Barometer"> Barometer<br>
+            <input type="radio" name="q4" value="Ammeter"> Ammeter<br>
+        </div>
+
+        <div class="question">
+            <p>5. What does CPU stand for?</p>
+            <input type="radio" name="q5" value="Central Processing Unit">
+            Central Processing Unit<br>
+
+            <input type="radio" name="q5" value="Computer Personal Unit">
+            Computer Personal Unit<br>
+
+            <input type="radio" name="q5" value="Central Program Unit">
+            Central Program Unit<br>
+        </div>
+
+        <button onclick="submitQuiz()">Submit Quiz</button>
+
+    </div>
+
+    <div id="result" style="display:none;"></div>
+
+</div>
+
+<script>
+
+let time = 30;
+let timer;
+
+function startQuiz() {
+
+    let name = document.getElementById("name").value;
+
+    if (name == "") {
+        alert("Please enter your name");
+        return;
+    }
+
+    document.getElementById("start").style.display = "none";
+    document.getElementById("quiz").style.display = "block";
+
+    document.getElementById("welcome").innerHTML =
+        "Welcome " + name + "!";
+
+    timer = setInterval(function() {
+
+        time--;
+
+        document.getElementById("timer").innerHTML =
+            "Time: " + time;
+
+        if (time <= 0) {
+            clearInterval(timer);
+            submitQuiz();
+        }
+
+    }, 1000);
+}
+
+
+function submitQuiz() {
+
+    clearInterval(timer);
+
+    let score = 0;
+
+    if (document.querySelector('input[name="q1"]:checked')?.value == "Delhi")
+        score++;
+
+    if (document.querySelector('input[name="q2"]:checked')?.value == "HTML")
+        score++;
+
+    if (document.querySelector('input[name="q3"]:checked')?.value == "7")
+        score++;
+
+    if (document.querySelector('input[name="q4"]:checked')?.value == "Thermometer")
+        score++;
+
+    if (document.querySelector('input[name="q5"]:checked')?.value ==
+        "Central Processing Unit")
+        score++;
+
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("result").style.display = "block";
+
+    let name = document.getElementById("name").value;
+
+    document.getElementById("result").innerHTML =
+        "<h2>Quiz Completed!</h2>" +
+        "<p>Participant: <b>" + name + "</b></p>" +
+        "<p>Your Score: <b>" + score + " / 5</b></p>" +
+        "<button onclick='location.reload()'>Take Quiz Again</button>";
+}
+
+</script>
+
+</body>
+</html>
+```
